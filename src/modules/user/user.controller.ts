@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User as UserModel } from '@prisma/client';
+import { Prisma, User as UserModel } from '@prisma/client';
 
 @Controller()
 export class UserController {
@@ -17,11 +17,11 @@ export class UserController {
 
   @Get('user')
   async getUsers(
-    @Query('name') name: string,
-    @Query('cpf') cpf: string,
-    @Query('email') email: string,
-    @Query('phone') phone: string,
-    @Query('orderBy') orderBy: 'asc' | 'desc',
+    @Query('name') name?: string,
+    @Query('cpf') cpf?: string,
+    @Query('email') email?: string,
+    @Query('phone') phone?: string,
+    @Query('orderBy') orderBy?: 'asc' | 'desc',
   ): Promise<UserModel[]> {
     return this.userService.users({
       orderBy: {
@@ -46,16 +46,16 @@ export class UserController {
   @Post('user')
   async signupUser(
     @Body()
-    user: UserModel,
+    user: Prisma.UserCreateInput,
   ): Promise<UserModel> {
     return this.userService.createUser(user);
   }
 
   @Put('user/:id')
-  async updateTask(
+  async updateUser(
     @Param('id') id: string,
     @Body()
-    data: UserModel,
+    data: Prisma.UserUpdateInput,
   ): Promise<UserModel> {
     return this.userService.updateUser({
       where: { id },

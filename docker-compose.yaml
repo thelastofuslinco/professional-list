@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  nest-pg:
+  professional_list_api:
     image: bitnami/postgresql
     ports:
-      - 5432:5432
+      - 5432:${POSTGRESQL_PORT}
     environment:
-      - POSTGRESQL_USERNAME=docker_username
-      - POSTGRESQL_PASSWORD=docker_password
-      - POSTGRESQL_DATABASE=professional_list_api
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
