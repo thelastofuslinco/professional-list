@@ -5,7 +5,7 @@ import { UserService } from '../../src/modules/user/user.service';
 import { PrismaService } from '../../src/prisma.service';
 
 export const mock_user_one: UserModel = {
-  id: 'user_one_id',
+  id: '1',
   name: 'user_one_name',
   email: 'user_one_mail@mail.com',
   cpf: 'user_one_cpf',
@@ -17,7 +17,7 @@ export const mock_user_one: UserModel = {
 };
 
 export const mock_user_two: UserModel = {
-  id: 'user_two_id',
+  id: '2',
   name: 'user_two_name',
   email: 'user_two_mail@mail.com',
   cpf: 'user_two_cpf',

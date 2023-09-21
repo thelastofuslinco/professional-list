@@ -31,9 +31,9 @@ DATABASE_URL="postgresql://docker_username:docker_password@localhost:5432/profes
 # seed
 
 - "seed": "ts-node prisma/seed.ts"
-- "seed:test": "dotenv -e .env.test -- ts-node prisma/seed.ts"
 
 # run
 
 - "start": "nest start",
 - "test": "dotenv -e .env.test -- jest"
+- "test:e2e": "jest --config ./test/jest-e2e.json",
