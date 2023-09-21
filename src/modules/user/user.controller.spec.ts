@@ -53,8 +53,7 @@ describe('UserController', () => {
     it('should delete user by id', async () => {
       const user = await userController.deleteUser(mock_user_one.id);
 
-      expect(user.name).toBe(mock_user_one.name);
-      expect(user.email).toBe(mock_user_one.email);
+      expect(user).toBeNull();
     });
   });
 });
