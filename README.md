@@ -62,7 +62,7 @@ npm run start
 
 8. Abra outro terminal e navegue até a pasta do projeto front-end, disponível em
 
-- [📚 Professional-list-web](https://github.com/thelastofuslinco/professional-list-web)
+- <a href="https://github.com/thelastofuslinco/professional-list-web" target="_blank">📚 Professional-list-web</a>
 
 9. Siga as instruções fornecidas no README.md do projeto **professional-list-web** para continuar a configuração e execução do projeto.
 
