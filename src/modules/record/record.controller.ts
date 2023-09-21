@@ -7,7 +7,7 @@ export class RecordController {
   constructor(private readonly userService: UserService) {}
 
   @Get('record')
-  async getUsers(
+  async getRecord(
     @Query('name') name: string,
     @Query('cpf') cpf: string,
     @Query('email') email: string,
@@ -30,12 +30,12 @@ export class RecordController {
   }
 
   @Get('record/:id')
-  async getUserById(@Param('id') id: string): Promise<UserModel> {
+  async getRecordById(@Param('id') id: string): Promise<UserModel> {
     return this.userService.user({ id });
   }
 
   @Put('record/:id')
-  async updateTask(
+  async updateRecord(
     @Param('id') id: string,
     @Body()
     data: UserModel,
