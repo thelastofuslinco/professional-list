@@ -32,10 +32,10 @@ export class UserService {
     });
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    data.password = await bcrypt.hash(data.password, 8);
+  async createUser(user: Prisma.UserCreateInput): Promise<User> {
+    const password = await bcrypt.hash(user.password, 8);
     return this.prisma.user.create({
-      data,
+      data: { ...user, password },
     });
   }
 
@@ -54,5 +54,9 @@ export class UserService {
     return this.prisma.user.delete({
       where,
     });
+  }
+
+  async deleteUsers() {
+    await this.prisma.user.deleteMany();
   }
 }
