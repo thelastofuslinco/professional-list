@@ -7,6 +7,7 @@ import {
   Delete,
   Param,
   Query,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User as UserModel } from '@prisma/client';
@@ -47,6 +48,12 @@ export class UserController {
   @Get(':id')
   @ApiOkResponse({ type: UserEntity })
   async getUserById(@Param('id') id: string): Promise<UserModel> {
+    const user = await this.userService.user({ id });
+
+    if (!user) {
+      throw new NotFoundException(`User ${id} does not exist.`);
+    }
+
     return this.userService.user({ id });
   }
 
