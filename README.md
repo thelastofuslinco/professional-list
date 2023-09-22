@@ -29,6 +29,7 @@ npm i
 
 ```shell
 # .env
+JWT_SECRET='3HEHFOFyW1jQoZdgBjaIo0+W2FNbwD7WDR2z5jrxVNs='
 POSTGRESQL_PORT="5432"
 POSTGRESQL_DATABASE="professional_list_api"
 POSTGRESQL_PASSWORD="docker_password"
@@ -66,7 +67,7 @@ npm run start
 
 9. Siga as instruções fornecidas no README.md do projeto **professional-list-web** para continuar a configuração e execução do projeto.
 
-O projeto está configurado para ser executado em http://localhost:3000. Certifique-se de que a porta esteja disponível em sua máquina antes de executar o projeto.
+O projeto está configurado para ser executado em http://localhost:3000. Certifique-se de que a porta esteja disponível em sua máquina antes de executar o projeto. Abra seu navegador e navegue até http://localhost:3000/api. Você deverá ver a documentação do app.
 
 ### 🚀 Testes
 
@@ -74,6 +75,7 @@ O projeto está configurado para ser executado em http://localhost:3000. Certifi
 
 ```shell
 # .env.test
+JWT_SECRET='3HEHFOFyW1jQoZdgBjaIo0+W2FNbwD7WDR2z5jrxVNs='
 POSTGRESQL_PORT="5432"
 POSTGRESQL_DATABASE="professional_list_api_test"
 POSTGRESQL_PASSWORD="docker_password"

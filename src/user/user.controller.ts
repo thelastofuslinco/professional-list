@@ -8,20 +8,39 @@ import {
   Param,
   Query,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User as UserModel } from '@prisma/client';
 import { UpdateUserDto } from './dto/updateArticleDto';
-import { CreateUserDto } from './dto/create-user.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('user')
 @ApiTags('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Post()
+  @ApiCreatedResponse({ type: UserEntity })
+  async signupUser(
+    @Body()
+    data: CreateUserDto,
+  ): Promise<UserModel> {
+    const user = await this.userService.createUser(data);
+    return new UserEntity(user);
+  }
+
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity, isArray: true })
   async getUsers(
     @Query('name') name?: string,
@@ -30,7 +49,7 @@ export class UserController {
     @Query('phone') phone?: string,
     @Query('orderBy') orderBy?: 'asc' | 'desc',
   ): Promise<UserModel[]> {
-    return this.userService.users({
+    const users = await this.userService.users({
       orderBy: {
         name: orderBy,
       },
@@ -43,9 +62,13 @@ export class UserController {
         ],
       },
     });
+
+    return users.map((user) => new UserEntity(user));
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async getUserById(@Param('id') id: string): Promise<UserModel> {
     const user = await this.userService.user({ id });
@@ -54,34 +77,33 @@ export class UserController {
       throw new NotFoundException(`User ${id} does not exist.`);
     }
 
-    return this.userService.user({ id });
-  }
-
-  @Post()
-  @ApiCreatedResponse({ type: UserEntity })
-  async signupUser(
-    @Body()
-    user: CreateUserDto,
-  ): Promise<UserModel> {
-    return this.userService.createUser(user);
+    return new UserEntity(user);
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async updateUser(
     @Param('id') id: string,
     @Body()
     data: UpdateUserDto,
   ): Promise<UserModel> {
-    return this.userService.updateUser({
+    const user = await this.userService.updateUser({
       where: { id },
       data,
     });
+
+    return new UserEntity(user);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async deleteUser(@Param('id') id: string): Promise<UserModel> {
-    return this.userService.deleteUser({ id });
+    const user = await this.userService.deleteUser({ id });
+
+    return new UserEntity(user);
   }
 }
