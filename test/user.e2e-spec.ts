@@ -2,7 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { mock_user_one, mock_user_two, setupDataBase } from './fixtures/db';
+import { mock_user_one, mock_user_two } from './fixtures/db';
+import { UserService } from 'src/user/user.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -16,7 +17,9 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
-    await setupDataBase();
+
+    const userService = app.get<UserService>(UserService);
+    await userService.deleteUsers();
   });
 
   it('/user (GET)', async () => {
