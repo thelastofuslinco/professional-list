@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { User as UserModel } from '@prisma/client';
-import { UserController } from '../../src/modules/user/user.controller';
-import { UserService } from '../../src/modules/user/user.service';
-import { PrismaService } from '../../src/prisma.service';
+import { PrismaService } from '../../src/prisma/prisma.service';
+import { UserController } from '../../src/user/user.controller';
+import { UserService } from '../../src/user/user.service';
 
 export const mock_user_one: UserModel = {
   id: '1',

@@ -9,13 +9,19 @@ import {
   Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Prisma, User as UserModel } from '@prisma/client';
+import { User as UserModel } from '@prisma/client';
+import { UpdateUserDto } from './dto/updateArticleDto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { UserEntity } from './entities/user.entity';
 
-@Controller()
+@Controller('user')
+@ApiTags('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('user')
+  @Get()
+  @ApiOkResponse({ type: UserEntity, isArray: true })
   async getUsers(
     @Query('name') name?: string,
     @Query('cpf') cpf?: string,
@@ -38,24 +44,27 @@ export class UserController {
     });
   }
 
-  @Get('user/:id')
+  @Get(':id')
+  @ApiOkResponse({ type: UserEntity })
   async getUserById(@Param('id') id: string): Promise<UserModel> {
     return this.userService.user({ id });
   }
 
-  @Post('user')
+  @Post()
+  @ApiCreatedResponse({ type: UserEntity })
   async signupUser(
     @Body()
-    user: Prisma.UserCreateInput,
+    user: CreateUserDto,
   ): Promise<UserModel> {
     return this.userService.createUser(user);
   }
 
-  @Put('user/:id')
+  @Put(':id')
+  @ApiOkResponse({ type: UserEntity })
   async updateUser(
     @Param('id') id: string,
     @Body()
-    data: Prisma.UserUpdateInput,
+    data: UpdateUserDto,
   ): Promise<UserModel> {
     return this.userService.updateUser({
       where: { id },
@@ -63,7 +72,8 @@ export class UserController {
     });
   }
 
-  @Delete('user/:id')
+  @Delete(':id')
+  @ApiOkResponse({ type: UserEntity })
   async deleteUser(@Param('id') id: string): Promise<UserModel> {
     return this.userService.deleteUser({ id });
   }
