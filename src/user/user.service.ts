@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma.service';
 import { User, Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { UpdateUserDto } from './dto/updateArticleDto';
 
 @Injectable()
 export class UserService {
@@ -32,8 +34,9 @@ export class UserService {
     });
   }
 
-  async createUser(user: Prisma.UserCreateInput): Promise<User> {
+  async createUser(user: CreateUserDto): Promise<User> {
     const password = await bcrypt.hash(user.password, 8);
+
     return this.prisma.user.create({
       data: { ...user, password },
     });
@@ -41,7 +44,7 @@ export class UserService {
 
   async updateUser(params: {
     where: Prisma.UserWhereUniqueInput;
-    data: Prisma.UserUpdateInput;
+    data: UpdateUserDto;
   }): Promise<User> {
     const { where, data } = params;
     return this.prisma.user.update({
