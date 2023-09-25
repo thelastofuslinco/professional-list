@@ -44,6 +44,7 @@ export class CreateUserDto {
 
   @IsBoolean()
   @Type(() => Boolean)
+  @IsOptional()
   @ApiProperty({ default: false, required: false })
   authenticated?: boolean;
 
