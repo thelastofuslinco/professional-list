@@ -37,8 +37,8 @@ export class CreateUserDto {
   phone?: string;
 
   @IsString()
-  @Length(8)
-  @ApiProperty()
+  @IsOptional()
+  @ApiProperty({ required: false })
   password: string;
 
   @IsDate()

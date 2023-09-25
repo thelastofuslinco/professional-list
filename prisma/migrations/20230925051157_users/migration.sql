@@ -5,7 +5,7 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
     "phone" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "authenticated" TIMESTAMP(3),
     "skills" TEXT[],
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
