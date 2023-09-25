@@ -15,6 +15,7 @@ async function main() {
       cpf: `000.000.000-${index}`,
       phone: `(00) 00000-00${index}`,
       password,
+      authenticated: false,
       skills: [`skill#${index}`],
     };
 

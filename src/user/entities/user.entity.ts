@@ -26,12 +26,15 @@ export class UserEntity implements User {
   @ApiProperty()
   password: string;
 
-  @ApiProperty({ required: false, nullable: true })
-  authenticated: Date | null;
+  @ApiProperty()
+  authenticated: boolean;
 
   @ApiProperty()
   skills: string[];
 
   @ApiProperty()
   created_at: Date;
+
+  @ApiProperty()
+  authenticated_at: Date;
 }

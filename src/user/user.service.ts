@@ -37,12 +37,13 @@ export class UserService {
 
   async createUser(data: CreateUserDto): Promise<User> {
     let password;
+    const authenticated_at = data.authenticated ? new Date() : null;
 
     data?.password &&
       (password = await bcrypt.hash(data.password, roundsOfHashing));
 
     return this.prisma.user.create({
-      data: { ...data, password },
+      data: { ...data, password, authenticated_at },
     });
   }
 
@@ -51,17 +52,14 @@ export class UserService {
     data: UpdateUserDto;
   }): Promise<User> {
     const { where, data } = params;
-    let password, authenticated;
+    let password;
+    const authenticated_at = data.authenticated ? new Date() : null;
 
     data?.password &&
       (password = await bcrypt.hash(data.password, roundsOfHashing));
 
-    data?.authenticated !== 'false'
-      ? (authenticated = new Date(data.authenticated))
-      : (authenticated = null);
-
     return this.prisma.user.update({
-      data: { ...data, password, authenticated },
+      data: { ...data, password, authenticated_at },
       where,
     });
   }
