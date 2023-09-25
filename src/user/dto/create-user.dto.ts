@@ -8,7 +8,6 @@ import {
   ArrayMaxSize,
   Length,
   IsEmail,
-  IsDate,
   IsArray,
 } from 'class-validator';
 
@@ -41,10 +40,10 @@ export class CreateUserDto {
   @ApiProperty({ required: false })
   password: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
   @ApiProperty({ required: false })
-  authenticated?: Date;
+  authenticated?: string;
 
   @IsArray()
   @IsString({ each: true })
