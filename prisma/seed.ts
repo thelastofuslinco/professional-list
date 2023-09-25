@@ -6,14 +6,14 @@ const roundsOfHashing = 8;
 
 async function main() {
   await prisma.user.deleteMany();
-  for (let index = 1; index <= 100; index++) {
+  for (let index = 10; index <= 99; index++) {
     const password = await bcrypt.hash(`password${index}`, roundsOfHashing);
 
     const data = {
       name: `user#${index}`,
       email: `email${index}@mail.com`,
       cpf: `000.000.000-${index}`,
-      phone: `000000000${index}`,
+      phone: `(00) 00000-00${index}`,
       password,
       skills: [`skill#${index}`],
     };
