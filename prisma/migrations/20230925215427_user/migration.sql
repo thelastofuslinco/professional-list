@@ -6,9 +6,10 @@ CREATE TABLE "users" (
     "cpf" TEXT NOT NULL,
     "phone" TEXT,
     "password" TEXT,
-    "authenticated" TIMESTAMP(3),
+    "authenticated" BOOLEAN,
     "skills" TEXT[],
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "authenticated_at" TIMESTAMP(3),
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
