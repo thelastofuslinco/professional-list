@@ -21,6 +21,18 @@ async function main() {
 
     await prisma.user.create({ data });
   }
+
+  const data = {
+    name: `Admin`,
+    email: `admin@mail.com`,
+    cpf: `000.000.000-00`,
+    phone: `(00) 00000-0000`,
+    password: 'admin123',
+    authenticated: false,
+    skills: [`javascript`, 'react'],
+  };
+
+  await prisma.user.create({ data });
 }
 
 main()
