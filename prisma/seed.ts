@@ -22,12 +22,14 @@ async function main() {
     await prisma.user.create({ data });
   }
 
+  const password = await bcrypt.hash(`admin123`, roundsOfHashing);
+
   const data = {
     name: `Admin`,
     email: `admin@mail.com`,
     cpf: `000.000.000-00`,
     phone: `(00) 00000-0000`,
-    password: 'admin123',
+    password,
     authenticated: false,
     skills: [`javascript`, 'react'],
   };
