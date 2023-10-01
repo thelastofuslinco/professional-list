@@ -28,7 +28,7 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
-  @Length(14, 14)
+  @Length(11, 11)
   @ApiProperty()
   cpf: string;
 
