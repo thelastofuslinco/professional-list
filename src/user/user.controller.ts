@@ -66,15 +66,15 @@ export class UserController {
     return users.map((user) => new UserEntity(user));
   }
 
-  @Get(':id')
+  @Get(':name')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
-  async getUserById(@Param('id') id: string): Promise<UserModel> {
-    const user = await this.userService.user({ id });
+  async getUserByName(@Param('name') name: string): Promise<UserModel> {
+    const user = await this.userService.user({ name });
 
     if (!user) {
-      throw new NotFoundException(`User ${id} does not exist.`);
+      throw new NotFoundException(`User ${name} does not exist.`);
     }
 
     return new UserEntity(user);

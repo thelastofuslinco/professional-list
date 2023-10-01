@@ -7,6 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 describe('UserController', () => {
   let userController: UserController;
   let userId = '';
+  let userName = '';
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -16,15 +17,16 @@ describe('UserController', () => {
 
     const userService = app.get<UserService>(UserService);
     await userService.deleteUsers();
-    const { id } = await userService.createUser(mock_user_one);
+    const { id, name } = await userService.createUser(mock_user_one);
     userController = app.get<UserController>(UserController);
     userId = id;
+    userName = name;
   });
 
   describe('/users', () => {
     it('should create a new user', async () => {
       const response = await userController.signupUser(mock_user_two);
-      const user = await userController.getUserById(response.id);
+      const user = await userController.getUserByName(response.name);
 
       expect(user).not.toBeNull();
       expect(response.name).toBe(user.name);
@@ -45,8 +47,8 @@ describe('UserController', () => {
       expect(users[0].email).toBe(mock_user_one.email);
     });
 
-    it('should get user by id', async () => {
-      const user = await userController.getUserById(userId);
+    it('should get user by name', async () => {
+      const user = await userController.getUserByName(userName);
 
       expect(user.name).toBe(mock_user_one.name);
       expect(user.email).toBe(mock_user_one.email);
@@ -54,11 +56,11 @@ describe('UserController', () => {
 
     it('should not get non-existent user', async () => {
       try {
-        await userController.getUserById('invalid_id');
+        await userController.getUserByName('invalid_name');
       } catch (error) {
         expect(error.response).toHaveProperty(
           'message',
-          'User invalid_id does not exist.',
+          'User invalid_name does not exist.',
         );
         expect(error.response).toHaveProperty('statusCode', 404);
       }

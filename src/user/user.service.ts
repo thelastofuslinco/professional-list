@@ -36,10 +36,11 @@ export class UserService {
   }
 
   async createUser(data: CreateUserDto): Promise<User> {
+    let password;
     const authenticated_at = data.authenticated ? new Date() : null;
 
     data?.password &&
-      (data.password = await bcrypt.hash(data.password, roundsOfHashing));
+      (password = await bcrypt.hash(data.password, roundsOfHashing));
 
     data?.cpf &&
       (data.cpf = data.cpf.replaceAll(
@@ -48,7 +49,7 @@ export class UserService {
       ));
 
     return this.prisma.user.create({
-      data: { ...data, authenticated_at },
+      data: { ...data, password, authenticated_at },
     });
   }
 
@@ -57,10 +58,11 @@ export class UserService {
     data: UpdateUserDto;
   }): Promise<User> {
     const { where, data } = params;
+    let password;
     const authenticated_at = data.authenticated ? new Date() : null;
 
     data?.password &&
-      (data.password = await bcrypt.hash(data.password, roundsOfHashing));
+      (password = await bcrypt.hash(data.password, roundsOfHashing));
 
     data?.cpf &&
       (data.cpf = data.cpf.replaceAll(
@@ -69,7 +71,7 @@ export class UserService {
       ));
 
     return this.prisma.user.update({
-      data: { ...data, authenticated_at },
+      data: { ...data, password, authenticated_at },
       where,
     });
   }
