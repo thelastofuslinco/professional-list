@@ -48,6 +48,12 @@ export class UserService {
         '$1.$2.$3-$4',
       ));
 
+    data?.phone &&
+      (data.phone = data.phone.replaceAll(
+        /(\d{2})(\d{5})(\d{4})/g,
+        '($1) $2.$3',
+      ));
+
     return this.prisma.user.create({
       data: { ...data, password, authenticated_at },
     });
@@ -68,6 +74,12 @@ export class UserService {
       (data.cpf = data.cpf.replaceAll(
         /(\d{3})(\d{3})(\d{3})(\d{2})/g,
         '$1.$2.$3-$4',
+      ));
+
+    data?.phone &&
+      (data.phone = data.phone.replaceAll(
+        /(\d{2})(\d{5})(\d{4})/g,
+        '($1) $2.$3',
       ));
 
     return this.prisma.user.update({

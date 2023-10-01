@@ -10,7 +10,7 @@ async function main() {
     const password = await bcrypt.hash(`password${index}`, roundsOfHashing);
 
     const data = {
-      name: `user#${index}`,
+      name: `user${index}`,
       email: `email${index}@mail.com`,
       cpf: `000.000.000-${index}`,
       phone: `(00) 00000-00${index}`,
