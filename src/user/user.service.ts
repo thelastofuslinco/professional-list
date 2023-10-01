@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserDto } from './dto/updateArticleDto';
 
-export const roundsOfHashing = 8;
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
@@ -36,26 +34,8 @@ export class UserService {
   }
 
   async createUser(data: CreateUserDto): Promise<User> {
-    let password;
-    const authenticated_at = data.authenticated ? new Date() : null;
-
-    data?.password &&
-      (password = await bcrypt.hash(data.password, roundsOfHashing));
-
-    data?.cpf &&
-      (data.cpf = data.cpf.replaceAll(
-        /(\d{3})(\d{3})(\d{3})(\d{2})/g,
-        '$1.$2.$3-$4',
-      ));
-
-    data?.phone &&
-      (data.phone = data.phone.replaceAll(
-        /(\d{2})(\d{5})(\d{4})/g,
-        '($1) $2.$3',
-      ));
-
     return this.prisma.user.create({
-      data: { ...data, password, authenticated_at },
+      data,
     });
   }
 
@@ -64,26 +44,9 @@ export class UserService {
     data: UpdateUserDto;
   }): Promise<User> {
     const { where, data } = params;
-    let password;
-    const authenticated_at = data.authenticated ? new Date() : null;
-
-    data?.password &&
-      (password = await bcrypt.hash(data.password, roundsOfHashing));
-
-    data?.cpf &&
-      (data.cpf = data.cpf.replaceAll(
-        /(\d{3})(\d{3})(\d{3})(\d{2})/g,
-        '$1.$2.$3-$4',
-      ));
-
-    data?.phone &&
-      (data.phone = data.phone.replaceAll(
-        /(\d{2})(\d{5})(\d{4})/g,
-        '($1) $2.$3',
-      ));
 
     return this.prisma.user.update({
-      data: { ...data, password, authenticated_at },
+      data,
       where,
     });
   }
