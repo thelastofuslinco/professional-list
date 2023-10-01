@@ -10,6 +10,7 @@ export const mock_user_one: User = {
   authenticated: null,
   skills: ['valid_skill'],
   created_at: new Date(),
+  authenticated_at: null,
 };
 
 export const mock_user_two: User = {
@@ -22,4 +23,5 @@ export const mock_user_two: User = {
   authenticated: null,
   skills: ['valid_skill'],
   created_at: new Date(),
+  authenticated_at: null,
 };

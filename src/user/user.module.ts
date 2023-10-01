@@ -7,7 +7,7 @@ import {
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PrismaModule } from '../prisma/prisma.module';
-import { UserMiddleware } from 'src/middlewares/UserMiddleware.middleware';
+import { UserMiddleware } from '../middlewares/UserMiddleware.middleware';
 
 @Module({
   controllers: [UserController],

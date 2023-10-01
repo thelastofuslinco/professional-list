@@ -6,6 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthModule } from './auth.module';
+import * as request from 'supertest';
 
 describe('UserController', () => {
   let authController: AuthController;
@@ -19,8 +20,11 @@ describe('UserController', () => {
 
     const userService = app.get<UserService>(UserService);
     await userService.deleteUsers();
-    await userService.createUser(mock_user_one);
     authController = app.get<AuthController>(AuthController);
+
+    const httpServer = app.createNestApplication();
+    await httpServer.init();
+    await request(httpServer.getHttpServer()).post('/user').send(mock_user_one);
   });
 
   describe('/users', () => {
