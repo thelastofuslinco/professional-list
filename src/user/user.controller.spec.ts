@@ -66,13 +66,13 @@ describe('UserController', () => {
       }
     });
 
-    it('should update user by id', async () => {
+    it('should update user by name', async () => {
       const newUserData = {
         name: 'New name',
         email: 'newEmail@mail.com',
         password: '12345678NewPassword',
       };
-      const user = await userController.updateUser(userId, newUserData);
+      const user = await userController.updateUser(userName, newUserData);
 
       expect(user.name).toBe(newUserData.name);
       expect(user.email).toBe(newUserData.email);

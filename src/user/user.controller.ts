@@ -80,17 +80,17 @@ export class UserController {
     return new UserEntity(user);
   }
 
-  @Put(':id')
+  @Put(':name')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async updateUser(
-    @Param('id') id: string,
+    @Param('name') name: string,
     @Body()
     data: UpdateUserDto,
   ): Promise<UserModel> {
     const user = await this.userService.updateUser({
-      where: { id },
+      where: { name },
       data,
     });
 
