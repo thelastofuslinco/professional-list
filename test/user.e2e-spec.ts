@@ -43,9 +43,9 @@ describe('AppController (e2e)', () => {
     expect(response.body.email).toEqual(mock_user_two.email);
   });
 
-  it(`user/${mock_user_one.id} (PUT)`, async () => {
+  it(`user/${mock_user_one.name} (PUT)`, async () => {
     const response = await request(app.getHttpServer())
-      .put(`/user/${mock_user_one.id}`)
+      .put(`/user/${mock_user_one.name}`)
       .send({
         name: 'New name',
       });
